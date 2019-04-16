@@ -1,5 +1,5 @@
 
-public class ProcessTable {
+public class ProcessTable implements Comparable<ProcessTable> {
 	
 	private	int id;
 	private static int amount=0;
@@ -53,6 +53,15 @@ public class ProcessTable {
 	public int getId() {
 		return this.id;
 	}
+	@Override
+	public int compareTo(ProcessTable p) {
+		int compare = Integer.compare(burst, p.getBurst());
+		if (compare==0) {
+			compare = -(Integer.compare(priority,  p.getPriority()));
+		}
+		return compare;
+	}
+	  
 
 }
 
