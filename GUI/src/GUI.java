@@ -91,7 +91,7 @@ public class GUI extends Application {
         run.setMinWidth(80);
         run.setMaxWidth(Double.MAX_VALUE);
         
-        Button about= new Button("About SJF");
+        Button about= new Button("About");
         about.setOnAction(e -> Detail.display());
         about.setMinWidth(80);
         about.setMaxWidth(Double.MAX_VALUE);
