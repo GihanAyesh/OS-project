@@ -5,6 +5,7 @@ public class ProcessTable implements Comparable<ProcessTable> {
 	private static int amount=0;
 	private int burst;
 	private int priority;
+	private boolean er;
 	
 	public ProcessTable() {
 		ProcessTable.amount++;
@@ -19,30 +20,18 @@ public class ProcessTable implements Comparable<ProcessTable> {
 		this.priority=priority;
 	}
 	public void setBurst(String burst) {
-		try{
-			int val = Integer.parseInt(burst);
-			if (val>100) {
-				val=100;
-			}else if (val<0) {
-				val=0;
-			}
-			this.burst=val;
-		}catch (NumberFormatException e) {
-			System.out.println("Wrong Format");
+		int val = Integer.parseInt(burst);
+		if (val<0) {
+			val=0;
 		}
+		this.burst=val;
 	}
 	public void setPriority(String priority) {
-		try{
-			int val = Integer.parseInt(priority);
-			if (val>10) {
-				val=10;
-			}else if (val<0) {
-				val=0;
-			}
-			this.priority=val;
-		}catch (NumberFormatException e) {
-			System.out.println("Wrong Format");
+		int val = Integer.parseInt(priority);
+		if (val<0) {
+			val=0;
 		}
+		this.priority=val;
 	}
 	public int getBurst() {
 		return this.burst;
@@ -64,6 +53,9 @@ public class ProcessTable implements Comparable<ProcessTable> {
 	  
 
 }
+
+
+
 
 
 
