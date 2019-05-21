@@ -210,7 +210,7 @@ public class GUI extends Application {
     
     public void deleteButton() {
     	ObservableList<ProcessTable> selected, allProcesses;
-    	allProcesses = table.getItems();
+    	allProcesses = table.getItems():
     	selected = table.getSelectionModel().getSelectedItems();
     	selected.forEach(allProcesses::remove);
     }
