@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -22,6 +23,7 @@ public class GUI extends Application {
 	private Scene begin,output;
 	private TableView<ProcessTable> table;
 	private static TableView<TimeList> timetable;
+	private static ArrayList<ProcessTable> intmd=new ArrayList();
 	private TextField burstVal, priorityVal ;
 	private ObservableList<ProcessTable> pc = FXCollections.observableArrayList();
 	public static StackedBarChart< Number,String> stackedBarChart;
@@ -36,10 +38,9 @@ public class GUI extends Application {
     	window=primaryStage;
         primaryStage.setTitle("SJF Scheduler");
         
-        Text text = new Text("Here is the table with the process details. Add data and press RUN to start the program \n "
-    			+ "If burst value is larger than 100 value will be 100. If negetive , value will be 0 \n"
-    			+ "If priority value is larger than 10 value will be 10. If negetive, value will be 0 ");
-                
+        Text text = new Text("Here is the table with the process details. Add data and press START to run the program \n "
+    			+ "If burst value is negetive , value will be 0 \n"
+    			+ "If priority value is negetive, value will be 0 ");
         Label label = new Label();
         label.setText(text.getText());
         label.setStyle("-fx-font:14px arial; -fx-text-fill:white; -fx-font-weight:bold;");
@@ -80,7 +81,9 @@ public class GUI extends Application {
         
         Button run= new Button("Start");
         run.setOnAction(e -> {
-        	
+        	for (int k=0; k<table.getItems().size();k++) {
+        		pc.add(table.getItems().get(k));
+        	}
         	Algorithm a = new Algorithm (pc);
         	a.calculate();
         	GanttChart c= new GanttChart();
@@ -91,7 +94,7 @@ public class GUI extends Application {
         run.setMinWidth(80);
         run.setMaxWidth(Double.MAX_VALUE);
         
-        Button about= new Button("About");
+        Button about= new Button("About SJF");
         about.setOnAction(e -> Detail.display());
         about.setMinWidth(80);
         about.setMaxWidth(Double.MAX_VALUE);
@@ -127,6 +130,7 @@ public class GUI extends Application {
         Button bck= new Button("Back");
         bck.setOnAction(e -> {
         	timetable.getItems().clear();
+        	pc.clear();
         	stackedBarChart.getData().clear();
         	window.setScene(begin);});
         
@@ -190,13 +194,18 @@ public class GUI extends Application {
         window.show();
     }
     public void addButton() {
-    	ProcessTable process= new ProcessTable();
-    	process.setBurst(burstVal.getText());
-    	process.setPriority(priorityVal.getText());
-    	table.getItems().add(process);
-    	pc.add(process);
-    	burstVal.clear();
-    	priorityVal.clear();
+    	if (Integer.class.isInstance(burstVal.getText() ) && Integer.class.isInstance(priorityVal.getText())) {
+    		ProcessTable process= new ProcessTable();
+    		process.setBurst(burstVal.getText());
+    		process.setPriority(priorityVal.getText());
+    		table.getItems().add(process);
+    		burstVal.clear();
+    		priorityVal.clear();
+    	}else {
+    		ErrorMsg.display("Wrong Format", "Please enter valid values");
+    		burstVal.clear();
+    		priorityVal.clear();
+    	}
     }
     
     public void deleteButton() {
@@ -210,6 +219,12 @@ public class GUI extends Application {
     }
     
 }
+
+
+
+
+
+
 
 
 
